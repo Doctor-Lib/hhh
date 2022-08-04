@@ -1666,6 +1666,31 @@ function challenge(){
 /**
  * @description: 题库提取到questi_list
  */
+
+/*改版*/
+function init_question_list() {
+
+    var path = "/sdcard/question_tiku.txt";
+    if (!files.exists(path)) {
+        try {
+            var x = http.get("https://git.metauniverse-cn.com/https://github.com/Twelve-blog/Study-together/blob/master/question_tiku.txt").body.string();
+            files.write("/sdcard/question_tiku.txt", x);
+        } catch (e) { }
+        s.error('题库文件不存在,仔细查看脚本介绍\n3s后自动退出脚本');
+        delay(3);
+        // s.close();
+        // exit();
+    }
+    var tiku = files.read(path);
+    tiku = tiku.split('\n');
+    for (var i = 0; i <= tiku.length; i++) {
+        if (tiku[i]) {
+            question_list.push(tiku[i].split('='));
+        }
+    }
+}
+
+/*原版
 function init_question_list(){
     var path = "/sdcard/question_tiku.txt";
     if(!files.exists(path)){
@@ -1682,6 +1707,9 @@ function init_question_list(){
         }
     }
 }
+*/
+
+
 /**
  * @description: 四人/双人对战
  */
